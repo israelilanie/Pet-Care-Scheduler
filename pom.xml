@@ -61,6 +61,70 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals><goal>prepare-agent</goal></goals>
+					</execution>
+					<execution>
+						<id>coverage-report</id>
+						<phase>test</phase>
+						<goals><goal>report</goal></goals>
+						<configuration>
+							<excludes>
+								<!-- Persistence models, DTOs, and thin HTTP adapters contain no business logic. -->
+								<exclude>**/CritterApplication.class</exclude>
+								<exclude>**/CritterController.class</exclude>
+								<exclude>**/*Controller.class</exclude>
+								<exclude>**/*DTO.class</exclude>
+								<exclude>**/*Repository.class</exclude>
+								<exclude>**/Customer.class</exclude>
+								<exclude>**/Employee.class</exclude>
+								<exclude>**/Pet.class</exclude>
+								<exclude>**/Schedule.class</exclude>
+								<exclude>**/*Skill.class</exclude>
+								<exclude>**/*Type.class</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>enforce-coverage</id>
+						<phase>verify</phase>
+						<goals><goal>check</goal></goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.70</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+							<excludes>
+								<exclude>**/CritterApplication.class</exclude>
+								<exclude>**/CritterController.class</exclude>
+								<exclude>**/*Controller.class</exclude>
+								<exclude>**/*DTO.class</exclude>
+								<exclude>**/*Repository.class</exclude>
+								<exclude>**/Customer.class</exclude>
+								<exclude>**/Employee.class</exclude>
+								<exclude>**/Pet.class</exclude>
+								<exclude>**/Schedule.class</exclude>
+								<exclude>**/*Skill.class</exclude>
+								<exclude>**/*Type.class</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
